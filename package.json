@@ -1,0 +1,19 @@
+{
+  "name": "hafen-map-generator",
+  "version": "0.0.1",
+  "description": "Sorts and stitches card titles",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Maksim Chornopolskii",
+  "license": "ISC",
+  "dependencies": {
+    "decimal.js": "^10.0.2",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "log4js": "^4.0.0",
+    "mysql": "^2.16.0"
+  }
+}
