@@ -16,11 +16,10 @@ function read(path) {
 async function toMap(path) {
   lg.debug(`${path}`);
   if (fs.existsSync(`${path}/ids.txt`)) {
-    let idsTmp = fs.readFileSync(`${path}/ids.txt`, 'utf8');
-    idsTmp = idsTmp.split('\n');
+    // let ids = {};
     let ids = [];
     let grids = [];
-    idsTmp.forEach(id => {
+    fs.readFileSync(`${path}/ids.txt`, 'utf8').split('\n').forEach(id => {
       let i = id.split(',');
       if (i.length < 3) {
       } else {
@@ -35,23 +34,31 @@ async function toMap(path) {
       }
 
     });
+    // return;
+    let rightIds = [];
     let knownGrids = await checkGrids(grids);
     // lg.debug(knownGrids);
+    let layoutId;
     if (knownGrids.length === 0) {
-      lg.debug('Создаю новый слой');
-      let layoutId = await createNewLayout();
-      ids.forEach((i) => i.layout_id = layoutId[0]);
-      await addCoords(ids);
+      return
+      // lg.debug('Создаю новый слой');
+      // layoutId = await createNewLayout();
+      // ids.forEach((i) => i.layout_id = layoutId[0]);
+      // rightIds = ids;
     } else {
       ids = setCoord(ids, knownGrids)
     }
+
     ids.forEach((item) => {
+      rightIds.push({grid_id: item.grid_id, x: item.x, y: item.y});
       let source = `${path}/tile_${item.offset_x}_${item.offset_y}.png`;
       let dest = `${process.env.MAP_9_FOLDER}/tile_${item.x}_${item.y}.png`;
+
       fs.copyFile(source, dest, (err) => {
-        if(err) lg.error(err);
+        if (err) lg.error(err);
       })
-    })
+    });
+    await addCoords(rightIds);
   }
 }
 
@@ -71,8 +78,8 @@ function setCoord(ids, knownGrids) {
   ids[zeroTitle].y = zeroTitleY;
   ids.forEach((item, i) => {
     if (item.grid_id !== knownTitle.grid_id) {
-      item.x = zeroTitleX - item.x;
-      item.y = zeroTitleY - item.y;
+      item.x = parseInt(zeroTitleX) + parseInt(item.x);
+      item.y = parseInt(zeroTitleY) + parseInt(item.y);
     }
   });
 
@@ -89,7 +96,10 @@ function setCoord(ids, knownGrids) {
 }
 
 async function addCoords(ids) {
-  return db('titles').insert(ids)
+  for(let i in ids){
+    db('titles').insert(ids[i]).then(i => i).catch(err => lg.error(err))
+  }
+  // return
 }
 
 async function createNewLayout() {
@@ -104,5 +114,7 @@ async function checkGrids(grids) {
   return result;
 }
 
-
-read(`${process.env.TMP_SESSION_FOLDER}`);
+module.exports = cron.schedule('* * * * *', () => {
+  read(`${process.env.TMP_SESSION_FOLDER}`);
+});
+// read(`${process.env.TMP_SESSION_FOLDER}`);
