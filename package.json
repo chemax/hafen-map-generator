@@ -1,6 +1,6 @@
 {
   "name": "hafen-map-generator",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Sorts and stitches card titles",
   "main": "app.js",
   "scripts": {
