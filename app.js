@@ -1,3 +1,7 @@
+/*Xo, [29.01.19 12:46]
+[In reply to енот]
+Bonding? Image mergeing уж тогда. Модуль merge-images*/
+
 require('dotenv').config();
 
 const express = require('express'); // Подключаем express

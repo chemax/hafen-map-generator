@@ -9,7 +9,11 @@ function read(path) {
   fs.readdir(path, (err, files) => {
     if (err) return err;
     files.forEach((f) => {
-      toMap(`${path}/${f}`)
+      try {
+        toMap(`${path}/${f}`)
+      }catch (e) {
+        lg.error(e);
+      }
     })
   })
 }

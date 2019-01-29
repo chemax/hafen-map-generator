@@ -10,9 +10,14 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.post('/session', function (req, res) {
-  if (Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
+  try {
+    if (Object.keys(req.files).length === 0) {
+      return res.status(400).send('No files were uploaded.');
+    }
+  } catch (e) {
+    return res.status(400).send(JSON.stringify(e));
   }
+
   let error = 0;
   for (let f in req.files) {
     let file = req.files[f];
@@ -31,17 +36,9 @@ router.post('/session', function (req, res) {
     });
   }
   if (error) {
-    return res.status(500).send('error')
+    return res.status(500).send(JSON.stringify(error))
   }
   return res.send('File uploaded!');
-});
-
-router.get('/', function (req, res) {
-  res.send('Birds home page');
-});
-
-router.get('/about', function (req, res) {
-  res.send('About birds');
 });
 
 module.exports = router;
