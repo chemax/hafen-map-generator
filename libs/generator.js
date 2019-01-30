@@ -42,10 +42,10 @@ async function toMap(path) {
     // return;
     let rightIds = [];
     let knownGrids = await checkGrids(grids);
-    // lg.debug(knownGrids);
+    lg.debug(knownGrids);
     let layoutId;
     if (knownGrids.length === 0) {
-      return
+      return lg.debug('Нет известных тайтлов')
       // lg.debug('Создаю новый слой');
       // layoutId = await createNewLayout();
       // ids.forEach((i) => i.layout_id = layoutId[0]);
@@ -58,7 +58,7 @@ async function toMap(path) {
       rightIds.push({grid_id: item.grid_id, x: item.x, y: item.y});
       let source = `${path}/tile_${item.offset_x}_${item.offset_y}.png`;
       let dest = `${process.env.MAP_FOLDER}/9/tile_${item.x}_${item.y}.png`;
-
+      lg.debug(`Copy tytle from ${source} to ${dest}`);
       fs.copyFile(source, dest, (err) => {
         if (err) lg.error(err);
       })
