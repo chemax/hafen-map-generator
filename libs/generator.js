@@ -4,6 +4,7 @@ const db = require('./db');
 const lg = require('./log');
 const fs = require('fs-extra');
 const cron = require('node-cron');
+const shell = require('shelljs');
 
 function read(path) {
   fs.readdir(path, (err, files) => {
@@ -63,7 +64,17 @@ async function toMap(path) {
         if (err) lg.error(err);
       })
     });
-    fs.move(path, `${process.env.SESSION_FOLDER}`).then().catch(e => lg.error(path, process.env.SESSION_FOLDER, e));
+
+    try {
+      // fs.moveSync(`${path}/`, `${process.env.SESSION_FOLDER}/`);
+      shell.mv('-f',`${path}/`,`${process.env.SESSION_FOLDER}/`)
+    } catch (e) {
+      lg.error(e);
+      lg.error(`${path}/`);
+      lg.error(`${process.env.SESSION_FOLDER}/`)
+    }
+
+    // .then().catch(e => lg.error(path, process.env.SESSION_FOLDER, e));
     await addCoords(rightIds);
   }
 }
