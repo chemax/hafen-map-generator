@@ -29,7 +29,7 @@ router.post('/session', function (req, res) {
 
     }
     try {
-      fs.mkdirSync(`${process.env.MAP_9_FOLDER}`, {recursive: true});
+      fs.mkdirSync(`${process.env.MAP_FOLDER}`, {recursive: true});
     } catch (e) {
 
     }

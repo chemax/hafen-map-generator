@@ -19,7 +19,7 @@ function read(path) {
 }
 
 async function toMap(path) {
-  lg.debug(`${path}`);
+  lg.debug(`путь ${path}`);
   if (fs.existsSync(`${path}/ids.txt`)) {
     // let ids = {};
     let ids = [];
@@ -63,6 +63,7 @@ async function toMap(path) {
         if (err) lg.error(err);
       })
     });
+    fs.mv(path, `${process.env.SESSION_FOLDER}`);
     await addCoords(rightIds);
   }
 }
@@ -119,7 +120,7 @@ async function checkGrids(grids) {
   return result;
 }
 
-module.exports = cron.schedule('* * * * *', () => {
+module.exports = cron.schedule('*/10 * * * * *', () => {
   read(`${process.env.TMP_SESSION_FOLDER}`);
 });
 // read(`${process.env.TMP_SESSION_FOLDER}`);
