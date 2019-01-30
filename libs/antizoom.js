@@ -54,5 +54,5 @@ function appendImages(arr, new_x, new_y, lvl) {
 
 
 module.exports = cron.schedule('* * * * * *', () => {
-  enumeration(-10, 10, 2, `${process.env.MAP_FOLDER}/${i}`);
+  enumeration(-10, 10, 2, `${process.env.MAP_FOLDER}/9`);
 });
