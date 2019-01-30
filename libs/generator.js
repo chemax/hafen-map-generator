@@ -57,7 +57,7 @@ async function toMap(path) {
     ids.forEach((item) => {
       rightIds.push({grid_id: item.grid_id, x: item.x, y: item.y});
       let source = `${path}/tile_${item.offset_x}_${item.offset_y}.png`;
-      let dest = `${process.env.MAP_9_FOLDER}/tile_${item.x}_${item.y}.png`;
+      let dest = `${process.env.MAP_FOLDER}/9/tile_${item.x}_${item.y}.png`;
 
       fs.copyFile(source, dest, (err) => {
         if (err) lg.error(err);

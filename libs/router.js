@@ -23,9 +23,24 @@ router.post('/session', function (req, res) {
     let file = req.files[f];
     let name = file.name;
     if (!name.includes('.zip')) return res.status(408).send('not zip archieve');
-    fs.mkdirSync(`${process.env.SESSION_FOLDER}`, {recursive: true});
-    fs.mkdirSync(`${process.env.MAP_9_FOLDER}`, {recursive: true});
-    fs.mkdirSync(`${process.env.TMP_SESSION_FOLDER}`, {recursive: true});
+    try {
+      fs.mkdirSync(`${process.env.SESSION_FOLDER}`, {recursive: true});
+    } catch (e) {
+
+    }
+    try {
+      fs.mkdirSync(`${process.env.MAP_9_FOLDER}`, {recursive: true});
+    } catch (e) {
+
+    }
+    try {
+      fs.mkdirSync(`${process.env.TMP_SESSION_FOLDER}`, {recursive: true});
+    } catch (e) {
+
+    }
+
+
+
     lg.debug(`try to upload ${name}`);
     file.mv(`${process.env.TMP_ARCHIEVE_FOLDER}/${name}`, function (err) {
       if (err) {
