@@ -11,7 +11,7 @@ function read(path) {
     files.forEach((f) => {
       try {
         toMap(`${path}/${f}`)
-      }catch (e) {
+      } catch (e) {
         lg.error(e);
       }
     })
@@ -63,7 +63,7 @@ async function toMap(path) {
         if (err) lg.error(err);
       })
     });
-     fs.move(path, `${process.env.SESSION_FOLDER}`).then().catch(e => lg.error(e));
+    fs.move(path, `${process.env.SESSION_FOLDER}`).then().catch(e => lg.error(path, process.env.SESSION_FOLDER, e));
     await addCoords(rightIds);
   }
 }
@@ -102,7 +102,7 @@ function setCoord(ids, knownGrids) {
 }
 
 async function addCoords(ids) {
-  for(let i in ids){
+  for (let i in ids) {
     db('titles').insert(ids[i]).then(i => i).catch(err => err)
   }
   // return
