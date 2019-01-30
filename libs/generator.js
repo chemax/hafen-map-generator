@@ -103,7 +103,7 @@ function setCoord(ids, knownGrids) {
 
 async function addCoords(ids) {
   for(let i in ids){
-    db('titles').insert(ids[i]).then(i => i).catch(err => lg.error(err))
+    db('titles').insert(ids[i]).then(i => i).catch()
   }
   // return
 }
