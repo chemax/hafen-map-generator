@@ -7,10 +7,10 @@ function enumeration(start, max, mod, folder = `${process.env.MAP_FOLDER}/9`) {
   for (let i = 8; i > 0; i--) {
     for (let x = start; x <= max; x += mod) {
       for (let y = start; y <= max; y += mod) {
-        lg.debug('=======================');
-        lg.debug(`${x}.${y}; ${x + 1}.${y}`);
-        lg.debug(`${x}.${y + 1}; ${x + 1}.${y + 1}`);
-        lg.debug(`New coord: ${x / 2}.${y / 2}`);
+        // lg.debug('=======================');
+        // lg.debug(`${x}.${y}; ${x + 1}.${y}`);
+        // lg.debug(`${x}.${y + 1}; ${x + 1}.${y + 1}`);
+        // lg.debug(`New coord: ${x / 2}.${y / 2}`);
         appendImages([
           `${process.env.MAP_FOLDER}/${i + 1}/tile_${x}_${y}`,
           `${process.env.MAP_FOLDER}/${i + 1}/tile_${x + 1}_${y}`,
