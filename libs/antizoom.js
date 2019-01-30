@@ -1,5 +1,5 @@
 const lg = require('./log');
-const shell = require('shell.js');
+const shell = require('shelljs');
 const fs = require('fs-extra');
 const cron = require('node-cron');
 
