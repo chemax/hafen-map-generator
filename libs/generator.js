@@ -63,7 +63,7 @@ async function toMap(path) {
         if (err) lg.error(err);
       })
     });
-    await fs.move(path, `${process.env.SESSION_FOLDER}`);
+     fs.move(path, `${process.env.SESSION_FOLDER}`).then().catch(e => lg.error(e));
     await addCoords(rightIds);
   }
 }
