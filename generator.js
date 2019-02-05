@@ -3,7 +3,7 @@ require('dotenv').config();
 const db = require('./libs/db');
 const lg = require('./libs/log');
 const fs = require('fs-extra');
-const cron = require('node-cron');
+const rimraf = require('rimraf');
 const shell = require('shelljs');
 
 function read(path) {
@@ -43,7 +43,10 @@ async function toMap(path2, f) {
       }
 
     });
-    if(ids.length < 8) return lg.error('Слишком короткий массив данных');
+    if (ids.length < 8) {
+      rimraf(path, fs, (err) => {if(err) lg.error(err)});
+      return lg.error('Слишком короткий массив данных');
+    }
     // return;
     let rightIds = [];
     let knownGrids = await checkGrids(grids);
@@ -58,6 +61,7 @@ async function toMap(path2, f) {
     } else {
       lg.debug(knownGrids);
       let newCoord = await setCoord(ids, knownGrids);
+      if(!newCoord) return;
       ids = newCoord.ids;
       layoutName = newCoord.layoutName;
       layoutId = newCoord.layoutId;
@@ -118,7 +122,12 @@ async function setCoord(ids, knownGrids) {
   lg.debug('knownTitle', knownTitle);
   let layoutId = knownTitle.layout_id;
   let layoutName = await (getLayoutName(layoutId));
-  layoutName = layoutName[0].name;
+  if(layoutName[0]){
+    layoutName = layoutName[0].name ;
+  } else{
+    return;
+  }
+
   let zeroTitle;
   ids.forEach((curr, i) => {
     if (curr.grid_id === knownTitle.grid_id) zeroTitle = i;
