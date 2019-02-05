@@ -3,10 +3,21 @@ const router = express.Router();
 const lg = require('./log');
 const fs = require('fs-extra');
 const Zip = require('adm-zip');
+const db = require('./db');
 
 router.use(function timeLog(req, res, next) {
   // console.log('Time: ', Date.now());
   next();
+});
+
+router.get('/grid_ids.txt', function (req, res) {
+  db.select().from('titles').then(data => {
+    let file = "";
+    for(d in data){
+      file += `${data[d].x},${data[d].y},${data[d].grid_id}\n`;
+    }
+    res.send(file);
+  }).catch(err=>res.sendStatus(503));
 });
 
 router.post('/session', function (req, res) {

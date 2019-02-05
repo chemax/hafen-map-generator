@@ -23,8 +23,8 @@ const fileUpload = require('express-fileupload');
 const PORT = process.env.API_PORT || 3001; // Можно любой другой порт
 const router = require('./libs/router');
 const server = require('http').Server(app); // Подключаем http через app
-const generator = require('./libs/generator');
-const antizoom = require('./libs/antizoom');
+// const generator = require('./generator');
+// const antizoom = require('./antizoom');
 
 app.use(fileUpload());
 app.use('/', router);
