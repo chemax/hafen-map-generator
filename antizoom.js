@@ -58,9 +58,9 @@ function appendImages(arr, new_x, new_y, lvl, layout) {
   shell.exec(`/usr/bin/convert ${arr[2]} ${arr[3]} +append ${tmp2}`);
   shell.exec(`/usr/bin/convert ${tmp1} ${tmp2} -append ${tmp3}`);
   shell.exec(`/usr/bin/convert ${tmp3} -resize 100x100 ${process.env.MAP_FOLDER}${layout}/${lvl}/tile_${new_x}_${new_y}.png`);
-  shell.rm(${tmp1});
-  shell.rm(${tmp2});
-  shell.rm(${tmp3});
+  shell.rm(tmp1);
+  shell.rm(tmp2);
+  shell.rm(tmp3);
 }
 
 
